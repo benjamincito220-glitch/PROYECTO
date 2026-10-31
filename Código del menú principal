@@ -1,0 +1,34 @@
+namespace SISTEMA_AYUNTAMIENTOS
+{
+    public partial class FrmMenuPrincipal : Form
+    {
+        public FrmMenuPrincipal()
+        {
+            InitializeComponent();
+        }
+
+        private void btnNuevaSolicitud_Click(object sender, EventArgs e)
+        {
+            FrmNuevaSolicitud formulario =
+                new FrmNuevaSolicitud();
+
+            formulario.ShowDialog();
+        }
+
+        private void btnSeguimiento_Click(object sender, EventArgs e)
+        {
+            FrmSeguimiento seguimiento =
+                new FrmSeguimiento();
+
+            seguimiento.ShowDialog();
+        }
+
+        private void btnPanelEmpleados_Click(object sender, EventArgs e)
+        {
+            FrmPanelEmpleados panel =
+                new FrmPanelEmpleados();
+
+            panel.ShowDialog();
+        }
+    }
+}
