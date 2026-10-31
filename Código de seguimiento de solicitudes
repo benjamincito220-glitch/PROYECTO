@@ -1,0 +1,36 @@
+using System;
+using System.Data;
+using System.Linq;
+
+namespace SISTEMA_AYUNTAMIENTOS
+{
+    public partial class FrmSeguimiento : Form
+    {
+        public FrmSeguimiento()
+        {
+            InitializeComponent();
+
+            CargarSolicitudes();
+        }
+
+        private void CargarSolicitudes()
+        {
+            dgvSolicitudes.DataSource =
+                SolicitudBD.ObtenerTodas();
+        }
+
+        private void txtBuscarSolicitud_TextChanged(
+            object sender, EventArgs e)
+        {
+            DataTable tabla = SolicitudBD.ObtenerTodas();
+
+            DataView vista = tabla.DefaultView;
+
+            vista.RowFilter =
+                "Convert(NumeroSolicitud, 'System.String') LIKE '%" +
+                txtBuscarSolicitud.Text.Replace("'", "''") + "%'";
+
+            dgvSolicitudes.DataSource = vista;
+        }
+    }
+}
