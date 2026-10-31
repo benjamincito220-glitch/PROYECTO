@@ -1,1 +1,38 @@
+// Método que se ejecuta cuando el usuario hace clic en el botón de iniciar sesión.
+private void button1_Click(object sender, EventArgs e)
+{
+    // Obtiene el nombre de usuario escrito y elimina los espacios al inicio y al final.
+    string usuario = txtUsuarios.Text.Trim();
 
+    // Obtiene la contraseña escrita en el campo correspondiente.
+    string contrasena = txtContrasena.Text;
+
+    // Comprueba si el usuario y la contraseña son correctos.
+    if (usuario == "admin" && contrasena == "1234")
+    {
+        // Muestra un mensaje indicando que el inicio de sesión fue exitoso.
+        MessageBox.Show("Bienvenido al sistema.");
+
+        // Crea una nueva instancia del formulario del menú principal.
+        FrmMenuPrincipal menu = new FrmMenuPrincipal();
+
+        // Abre el formulario del menú principal.
+        menu.Show();
+
+        // Oculta el formulario de inicio de sesión.
+        this.Hide();
+    }
+    else
+    {
+        // Muestra un mensaje indicando que los datos introducidos son incorrectos.
+        MessageBox.Show(
+            "Usuario o contraseña incorrectos.",
+            "Error",
+            MessageBoxButtons.OK,
+            MessageBoxIcon.Error
+        );
+    }
+}
+        );
+    }
+}
