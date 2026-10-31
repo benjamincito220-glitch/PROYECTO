@@ -1,0 +1,20 @@
+public static bool ActualizarEstado(string numero, string estado)
+{
+    using (SqlConnection conexion = ConexionBD.ObtenerConexion())
+    {
+        string consulta = @"
+            UPDATE Solicitudes
+            SET Estado = @Estado
+            WHERE NumeroSolicitud = @Numero";
+
+        using (SqlCommand comando = new SqlCommand(consulta, conexion))
+        {
+            comando.Parameters.AddWithValue("@Estado", estado);
+            comando.Parameters.AddWithValue("@Numero", numero);
+
+            conexion.Open();
+
+            return comando.ExecuteNonQuery() > 0;
+        }
+    }
+}
