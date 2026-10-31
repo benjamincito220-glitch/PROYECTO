@@ -1,0 +1,72 @@
+using System;
+using System.Windows.Forms;
+
+namespace SISTEMA_AYUNTAMIENTOS
+{
+    public partial class FrmPanelEmpleados : Form
+    {
+        public FrmPanelEmpleados()
+        {
+            InitializeComponent();
+            CargarSolicitudes();
+        }
+
+        private void CargarSolicitudes()
+        {
+            dgvSolicitudesEmpleados.DataSource =
+                SolicitudBD.ObtenerTodas();
+        }
+
+        private void btnAprobar_Click(object sender, EventArgs e)
+        {
+            CambiarEstado("Aprobada");
+        }
+
+        private void btnRechazar_Click(object sender, EventArgs e)
+        {
+            CambiarEstado("Rechazada");
+        }
+
+        private void btnCorreccion_Click(object sender, EventArgs e)
+        {
+            CambiarEstado("En corrección");
+        }
+
+        private void CambiarEstado(string estado)
+        {
+            if (dgvSolicitudesEmpleados.CurrentRow == null)
+            {
+                MessageBox.Show("Seleccione una solicitud.");
+                return;
+            }
+
+            string numero = Convert.ToString(
+                dgvSolicitudesEmpleados.CurrentRow
+                .Cells["NumeroSolicitud"].Value
+            );
+
+            try
+            {
+                bool actualizado =
+                    SolicitudBD.ActualizarEstado(numero, estado);
+
+                if (actualizado)
+                {
+                    MessageBox.Show(
+                        "La solicitud ahora está: " + estado
+                    );
+
+                    CargarSolicitudes();
+                }
+                else
+                {
+                    MessageBox.Show("No se pudo actualizar la solicitud.");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error: " + ex.Message);
+            }
+        }
+    }
+}
