@@ -1,1 +1,73 @@
+using System;
 
+namespace SISTEMA_AYUNTAMIENTOS
+{
+    public partial class FrmNuevaSolicitud : Form
+    {
+        public FrmNuevaSolicitud()
+        {
+            InitializeComponent();
+        }
+
+        private void btnGuardar_Click(object sender, EventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(txtNombreDocumento.Text) ||
+                string.IsNullOrWhiteSpace(cmbTipoDocumento.Text) ||
+                string.IsNullOrWhiteSpace(txtDescripcion.Text))
+            {
+                MessageBox.Show("Complete todos los campos.");
+                return;
+            }
+
+            Solicitud solicitud = new Solicitud();
+
+            solicitud.Numero = "SOL-" +
+                DateTime.Now.ToString("fff");
+
+            solicitud.NombreDocumento =
+                txtNombreDocumento.Text.Trim();
+
+            solicitud.TipoDocumento =
+                cmbTipoDocumento.Text;
+
+            solicitud.Descripcion =
+                txtDescripcion.Text.Trim();
+
+            solicitud.Estado = "Pendiente";
+
+            solicitud.FechaRegistro = DateTime.Now;
+
+            try
+            {
+                bool guardado = SolicitudBD.Guardar(solicitud);
+
+                if (guardado)
+                {
+                    MessageBox.Show(
+                        "La solicitud se ha registrado correctamente."
+                    );
+
+                    LimpiarCampos();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(
+                    "Error al guardar la solicitud: " + ex.Message
+                );
+            }
+        }
+
+        private void btnLimpiar_Click(object sender, EventArgs e)
+        {
+            LimpiarCampos();
+        }
+
+        private void LimpiarCampos()
+        {
+            txtNombreDocumento.Clear();
+            cmbTipoDocumento.SelectedIndex = -1;
+            txtDescripcion.Clear();
+        }
+    }
+}
